@@ -3,31 +3,30 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>birdbrain.dev // Security Research</title>
+        <title>About // bird-brain.dev</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+        />
         <style>
             :root {
-                /* Palette extracted from the Kirokaze artwork */
-                --bg: #0f131a; /* Deep slate midnight blue */
-                --surface: #171d26; /* Solid, opaque gray-blue canvas */
-                --text-primary: #e2e8f0; /* Crisp, high-visibility white-gray */
-                --text-secondary: #94a3b8; /* Muted slate for clean reading */
-                --meta-dim: #52637a; /* Low-contrast label color */
-                --accent-solid: #f59e0b; /* Warm sunset amber matching the terminal screen */
-                --border-solid: #222b38; /* Sharp layout division lines */
-                --divider-line: #1c232e; /* Muted structural divider line */
+                --bg: #0f131a;
+                --surface: #171d26;
+                --text-primary: #e2e8f0;
+                --text-secondary: #94a3b8;
+                --meta-dim: #52637a;
+                --accent-solid: #f59e0b;
+                --border-solid: #222b38;
+                --divider-line: #1c232e;
 
-                /* High-Res Fluid Typography */
                 --font-base: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
-                --font-h2: clamp(1.4rem, 1.3rem + 0.4vw, 1.75rem);
             }
 
-            /* High-DPI Display Optimization & Reset */
             * {
                 box-sizing: border-box;
                 margin: 0;
                 padding: 0;
                 -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
             }
 
             body {
@@ -84,120 +83,63 @@
                 color: var(--accent-solid);
             }
 
-            /* Cinematic Hero Window for the Pixel Art Loop */
-            .hero-window {
-                width: 100%;
-                height: 280px;
-                margin-top: 2.5rem;
-                margin-bottom: 4rem;
-                border: 1px solid var(--border-solid);
-                border-radius: 8px;
-                overflow: hidden;
-                background-color: #000;
+            main {
+                margin-top: 3rem;
             }
 
-            .hero-window img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-            }
-
-            /* Content Cards with the Structural Left-Border Indicator */
-            .post-card {
+            .profile-section {
                 background-color: var(--surface);
                 border: 1px solid var(--border-solid);
-                border-left: 4px solid var(--border-solid);
+                border-left: 4px solid var(--accent-solid);
                 border-radius: 6px;
-                padding: 2.5rem;
-                margin-bottom: 2rem;
-                transition:
-                    border-color 0.2s ease,
-                    border-left-color 0.2s ease;
+                padding: 2rem;
+                margin-bottom: 2.5rem;
             }
 
-            .post-card:hover {
-                border-color: var(--meta-dim);
-                border-left-color: var(--accent-solid);
-            }
-
-            .post-meta {
-                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
-                font-size: 0.8rem;
-                color: var(--accent-solid);
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                margin-bottom: 0.75rem;
-            }
-
-            .post-title {
-                font-size: var(--font-h2);
+            h1 {
                 color: var(--text-primary);
                 font-weight: 700;
-                line-height: 1.3;
                 margin-bottom: 1rem;
-                letter-spacing: -0.3px;
+                font-size: 1.8rem;
+                letter-spacing: -0.5px;
             }
 
-            .post-title a {
-                color: inherit;
+            p {
+                margin-bottom: 1rem;
+            }
+
+            p:last-of-type {
+                margin-bottom: 0;
+            }
+
+            .social-links {
+                margin-top: 1.5rem;
+                padding-top: 1.2rem;
+                border-top: 1px solid var(--border-solid);
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                font-size: 0.9rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+                align-items: center;
+            }
+
+            .social-links a {
+                color: var(--text-secondary);
                 text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
                 transition: color 0.15s ease;
             }
 
-            .post-title a:hover {
+            .social-links a:hover {
                 color: var(--accent-solid);
             }
 
-            .post-excerpt {
-                color: var(--text-secondary);
-                margin-bottom: 1.5rem;
-            }
-
-            /* Sharp Syntax Code Formatting */
-            pre,
-            code {
-                font-family:
-                    "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-                background-color: #0a0d14;
-                border: 1px solid var(--border-solid);
-            }
-
-            code {
-                padding: 0.15rem 0.4rem;
-                font-size: 0.95em;
-                color: #fca5a5;
-            }
-
-            pre {
-                padding: 1.25rem;
-                overflow-x: auto;
-                margin: 1.5rem 0;
-                border-radius: 4px;
-            }
-
-            pre code {
-                padding: 0;
-                border: none;
-                background: transparent;
-                color: var(--text-secondary);
-            }
-
-            .post-tags {
-                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
-                font-size: 0.75rem;
-                color: var(--meta-dim);
-                display: flex;
-                gap: 1rem;
-            }
-
-            .post-tags span {
-                transition: color 0.15s ease;
-            }
-
-            .post-tags span:hover {
-                color: var(--text-primary);
-                cursor: pointer;
+            .social-links i {
+                font-size: 1.2rem;
+                color: var(--accent-solid);
             }
 
             footer {
@@ -212,65 +154,50 @@
     </head>
     <body>
         <header>
-            <a href="#" class="logo">birdbrain<span>.</span>dev</a>
+            <a href="index.html" class="logo">birdbrain<span>.</span>dev</a>
             <nav>
                 <a href="index.html">/blog</a>
                 <a href="#">/projects</a>
                 <a href="htb.html">/htb</a>
                 <a href="thm.html">/thm</a>
-                <a href="about.html">/about</a>
+                <a href="about.html" style="color: var(--accent-solid)"
+                    >/about</a
+                >
             </nav>
         </header>
 
-        <!-- The Visual Window Element -->
-        <div class="hero-window">
-            <img
-                src="df1wdk7-fa62d5b6-a1b2-4b2b-b407-02e737476148.gif"
-                alt="Workspace Loop by Kirokaze"
-            />
-        </div>
-
         <main>
-            <article class="post-card">
-                <div class="post-meta">Memory Corruption</div>
-                <h2 class="post-title">
-                    <a href="#"
-                        >Bypassing Mitigations via Custom Heap Management
-                        Flaws</a
-                    >
-                </h2>
-                <p class="post-excerpt">
-                    An analysis of how proprietary memory allocators
-                    inadvertently introduce predictable chunk layouts, opening
-                    the door to reliable heap exploitation utilizing structural
-                    overlap tactics.
+            <section class="profile-section">
+                <h1>About Me</h1>
+                <p>
+                    I'm an aspiring security researcher learning how systems
+                    work and how they break. I focus on reverse engineering,
+                    vulnerability discovery, and technical problem solving one
+                    concept at a time.
                 </p>
-                <div class="post-tags">
-                    <span>[pwn]</span>
-                    <span>[heap]</span>
-                </div>
-            </article>
+                <p>
+                    I use <strong>C and C++</strong> to dig into Windows
+                    internals and malware behavior to see how things look under
+                    the hood. For everything else, I use
+                    <strong>Python</strong> to automate boring tasks, filter
+                    noise, and parse variables out of massive JS files during
+                    target recon.
+                </p>
 
-            <article class="post-card">
-                <div class="post-meta">Wireless Protocols</div>
-                <h2 class="post-title">
-                    <a href="#"
-                        >Analyzing Over-the-Air Replay Attacks in LoRaWAN
-                        Nodes</a
-                    >
-                </h2>
-                <p class="post-excerpt">
-                    Digging into wireless frame counters and dissecting how
-                    missing validation logic in specific gateway firmware
-                    implementations allows for malicious packet injection.
-                </p>
-                <div class="post-tags">
-                    <span>[iot]</span>
-                    <span>[lorawan]</span>
+                <div class="social-links">
+                    <a href="https://github.com/3-6-9-0d" target="_blank">
+                        <i class="ri-github-fill"></i> github
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="ri-linkedin-box-fill"></i> linkedin
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="ri-discord-fill"></i> discord
+                    </a>
                 </div>
-            </article>
+            </section>
         </main>
 
-        <footer>&copy; 2026 birdbrain.dev // Volatile logs.</footer>
+        <footer>&copy; 2026 bird-brain.dev // Volatile logs.</footer>
     </body>
 </html>
