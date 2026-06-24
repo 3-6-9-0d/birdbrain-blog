@@ -16,7 +16,6 @@
                 --divider-line: #1c232e;
 
                 --font-base: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
-                --font-h2: clamp(1.4rem, 1.3rem + 0.4vw, 1.75rem);
             }
 
             * {
@@ -89,56 +88,24 @@
                 border: 1px solid var(--border-solid);
                 border-left: 4px solid var(--accent-solid);
                 border-radius: 6px;
-                padding: 2.5rem;
+                padding: 2rem;
                 margin-bottom: 2.5rem;
             }
 
-            h1,
-            h2 {
+            h1 {
                 color: var(--text-primary);
                 font-weight: 700;
                 margin-bottom: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
                 letter-spacing: -0.5px;
             }
 
-            h2 {
-                font-size: var(--font-h2);
-                margin-top: 2rem;
-                border-bottom: 1px solid var(--border-solid);
-                padding-bottom: 0.5rem;
-            }
-
             p {
-                margin-bottom: 1.5rem;
+                margin-bottom: 1rem;
             }
 
-            .grid-list {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 1rem;
-                margin: 1.5rem 0;
-                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
-                font-size: 0.9rem;
-            }
-
-            .grid-item {
-                background: #0a0d14;
-                border: 1px solid var(--border-solid);
-                padding: 0.75rem 1rem;
-                border-radius: 4px;
-                color: var(--text-primary);
-            }
-
-            .grid-item span {
-                color: var(--accent-solid);
-                display: block;
-                font-size: 0.75rem;
-                text-transform: uppercase;
-                margin-bottom: 0.25rem;
+            p:last-child {
+                margin-bottom: 0;
             }
 
             footer {
@@ -167,38 +134,20 @@
 
         <main>
             <section class="profile-section">
-                <h1>Identity // Operator</h1>
+                <h1>About Me</h1>
                 <p>
-                    Security research enthusiast, software developer, and system
-                    builder focused on memory corruption, protocol analysis, and
-                    offensive infrastructure tracking.
+                    I'm an aspiring security researcher learning how systems
+                    work and how they break. I focus on reverse engineering,
+                    vulnerability discovery, and technical problem solving one
+                    concept at a time.
+                </p>
+                <p>
+                    I use <strong>C and C++</strong> for Windows internals and
+                    malware behavior to understand how things work. For
+                    everything else, I use <strong>Python</strong> to automate
+                    boring tasks.
                 </p>
             </section>
-
-            <h2>Technical Toolkit</h2>
-            <div class="grid-list">
-                <div class="grid-item">
-                    <span>Languages</span>C, Java, Python, Solidity
-                </div>
-                <div class="grid-item">
-                    <span>Environments</span>Linux, GDB, Remix, Hardhat
-                </div>
-                <div class="grid-item">
-                    <span>Interests</span>Heap Exploitation, IoT, Web3
-                </div>
-            </div>
-
-            <h2>Research Focus</h2>
-            <p>
-                Currently documenting techniques in automated vulnerability
-                analysis, hardware exploitation vectors (specifically analyzing
-                radio architectures like LoRaWAN), and smart contract
-                vulnerabilities.
-            </p>
-            <p>
-                This workspace serves as a volatile log index of CTF solutions,
-                infrastructure build-outs, and independent research findings.
-            </p>
         </main>
 
         <footer>&copy; 2026 bird-brain.dev // Volatile logs.</footer>
