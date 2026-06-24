@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>birdbrain.dev // Security Research</title>
+        <style>
+            :root {
+                /* Palette extracted from the Kirokaze artwork */
+                --bg: #0f131a; /* Deep slate midnight blue */
+                --surface: #171d26; /* Solid, opaque gray-blue canvas */
+                --text-primary: #e2e8f0; /* Crisp, high-visibility white-gray */
+                --text-secondary: #94a3b8; /* Muted slate for clean reading */
+                --meta-dim: #52637a; /* Low-contrast label color */
+                --accent-solid: #f59e0b; /* Warm sunset amber matching the terminal screen */
+                --border-solid: #222b38; /* Sharp layout division lines */
+                --divider-line: #1c232e; /* Muted structural divider line */
+
+                /* High-Res Fluid Typography */
+                --font-base: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+                --font-h2: clamp(1.4rem, 1.3rem + 0.4vw, 1.75rem);
+            }
+
+            /* High-DPI Display Optimization & Reset */
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                background-color: var(--bg);
+                color: var(--text-secondary);
+                font-size: var(--font-base);
+                line-height: 1.8;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 3rem 1.5rem;
+            }
+
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+                padding-bottom: 1.5rem;
+                border-bottom: 2px solid var(--divider-line);
+            }
+
+            .logo {
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                text-decoration: none;
+                text-transform: lowercase;
+                letter-spacing: 0.5px;
+            }
+
+            .logo span {
+                color: var(--accent-solid);
+            }
+
+            nav {
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                display: flex;
+                gap: 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            nav a {
+                color: var(--meta-dim);
+                text-decoration: none;
+                transition: color 0.15s ease;
+            }
+
+            nav a:hover {
+                color: var(--accent-solid);
+            }
+
+            /* Cinematic Hero Window for the Pixel Art Loop */
+            .hero-window {
+                width: 100%;
+                height: 280px;
+                margin-top: 2.5rem;
+                margin-bottom: 4rem;
+                border: 1px solid var(--border-solid);
+                border-radius: 8px;
+                overflow: hidden;
+                background-color: #000;
+            }
+
+            .hero-window img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            /* Content Cards with the Structural Left-Border Indicator */
+            .post-card {
+                background-color: var(--surface);
+                border: 1px solid var(--border-solid);
+                border-left: 4px solid var(--border-solid);
+                border-radius: 6px;
+                padding: 2.5rem;
+                margin-bottom: 2rem;
+                transition:
+                    border-color 0.2s ease,
+                    border-left-color 0.2s ease;
+            }
+
+            .post-card:hover {
+                border-color: var(--meta-dim);
+                border-left-color: var(--accent-solid);
+            }
+
+            .post-meta {
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                font-size: 0.8rem;
+                color: var(--accent-solid);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 0.75rem;
+            }
+
+            .post-title {
+                font-size: var(--font-h2);
+                color: var(--text-primary);
+                font-weight: 700;
+                line-height: 1.3;
+                margin-bottom: 1rem;
+                letter-spacing: -0.3px;
+            }
+
+            .post-title a {
+                color: inherit;
+                text-decoration: none;
+                transition: color 0.15s ease;
+            }
+
+            .post-title a:hover {
+                color: var(--accent-solid);
+            }
+
+            .post-excerpt {
+                color: var(--text-secondary);
+                margin-bottom: 1.5rem;
+            }
+
+            /* Sharp Syntax Code Formatting */
+            pre,
+            code {
+                font-family:
+                    "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+                background-color: #0a0d14;
+                border: 1px solid var(--border-solid);
+            }
+
+            code {
+                padding: 0.15rem 0.4rem;
+                font-size: 0.95em;
+                color: #fca5a5;
+            }
+
+            pre {
+                padding: 1.25rem;
+                overflow-x: auto;
+                margin: 1.5rem 0;
+                border-radius: 4px;
+            }
+
+            pre code {
+                padding: 0;
+                border: none;
+                background: transparent;
+                color: var(--text-secondary);
+            }
+
+            .post-tags {
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                font-size: 0.75rem;
+                color: var(--meta-dim);
+                display: flex;
+                gap: 1rem;
+            }
+
+            .post-tags span {
+                transition: color 0.15s ease;
+            }
+
+            .post-tags span:hover {
+                color: var(--text-primary);
+                cursor: pointer;
+            }
+
+            footer {
+                margin-top: 6rem;
+                border-top: 1px solid var(--border-solid);
+                padding-top: 2rem;
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                font-size: 0.8rem;
+                color: var(--meta-dim);
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href="#" class="logo">birdbrain<span>.</span>dev</a>
+            <nav>
+                <a href="#">/blog</a>
+                <a href="#">/projects</a>
+                <a href="#">/htb</a>
+                <a href="#">/thm</a>
+                <a href="#">/about</a>
+            </nav>
+        </header>
+
+        <!-- The Visual Window Element -->
+        <div class="hero-window">
+            <img
+                src="df1wdk7-fa62d5b6-a1b2-4b2b-b407-02e737476148.gif"
+                alt="Workspace Loop by Kirokaze"
+            />
+        </div>
+
+        <main>
+            <article class="post-card">
+                <div class="post-meta">Memory Corruption</div>
+                <h2 class="post-title">
+                    <a href="#"
+                        >Bypassing Mitigations via Custom Heap Management
+                        Flaws</a
+                    >
+                </h2>
+                <p class="post-excerpt">
+                    An analysis of how proprietary memory allocators
+                    inadvertently introduce predictable chunk layouts, opening
+                    the door to reliable heap exploitation utilizing structural
+                    overlap tactics.
+                </p>
+                <div class="post-tags">
+                    <span>[pwn]</span>
+                    <span>[heap]</span>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <div class="post-meta">Wireless Protocols</div>
+                <h2 class="post-title">
+                    <a href="#"
+                        >Analyzing Over-the-Air Replay Attacks in LoRaWAN
+                        Nodes</a
+                    >
+                </h2>
+                <p class="post-excerpt">
+                    Digging into wireless frame counters and dissecting how
+                    missing validation logic in specific gateway firmware
+                    implementations allows for malicious packet injection.
+                </p>
+                <div class="post-tags">
+                    <span>[iot]</span>
+                    <span>[lorawan]</span>
+                </div>
+            </article>
+        </main>
+
+        <footer>&copy; 2026 birdbrain.dev // Volatile logs.</footer>
+    </body>
+</html>
