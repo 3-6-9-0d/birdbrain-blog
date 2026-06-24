@@ -4,6 +4,10 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>About // bird-brain.dev</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+        />
         <style>
             :root {
                 --bg: #0f131a;
@@ -104,8 +108,38 @@
                 margin-bottom: 1rem;
             }
 
-            p:last-child {
+            p:last-of-type {
                 margin-bottom: 0;
+            }
+
+            .social-links {
+                margin-top: 1.5rem;
+                padding-top: 1.2rem;
+                border-top: 1px solid var(--border-solid);
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                font-size: 0.9rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+                align-items: center;
+            }
+
+            .social-links a {
+                color: var(--text-secondary);
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                transition: color 0.15s ease;
+            }
+
+            .social-links a:hover {
+                color: var(--accent-solid);
+            }
+
+            .social-links i {
+                font-size: 1.2rem;
+                color: var(--accent-solid);
             }
 
             footer {
@@ -142,11 +176,25 @@
                     concept at a time.
                 </p>
                 <p>
-                    I use <strong>C and C++</strong> for Windows internals and
-                    malware behavior to understand how things work. For
-                    everything else, I use <strong>Python</strong> to automate
-                    boring tasks.
+                    I use <strong>C and C++</strong> to dig into Windows
+                    internals and malware behavior to see how things look under
+                    the hood. For everything else, I use
+                    <strong>Python</strong> to automate boring tasks, filter
+                    noise, and parse variables out of massive JS files during
+                    target recon.
                 </p>
+
+                <div class="social-links">
+                    <a href="https://github.com/3-6-9-0d" target="_blank">
+                        <i class="ri-github-fill"></i> github
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="ri-linkedin-box-fill"></i> linkedin
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="ri-discord-fill"></i> discord
+                    </a>
+                </div>
             </section>
         </main>
 
