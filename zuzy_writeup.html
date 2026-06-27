@@ -625,9 +625,9 @@
                     </header>
 
                     <section id="incident-origin">
-                        <p>
+                        <B>
                             What started as a completely ordinary visit to
-                            Mouzy, a fusion drink outlet, turned into an
+                            <b>Mouzy</b>, a fusion drink outlet, turned into an
                             unexpected security assessment. After paying, the
                             cashier handed us a small card with a QR code and
                             told us we could play a game called Zuzy Run to win
@@ -729,7 +729,7 @@
                                 The following endpoint returned data without
                                 requiring any authentication checks:
                             </p>
-                            <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/players?pageSize=100</code></pre>
+                            <pre><code style="color:#cbd5e1;">GET /v1/projects/[REDACTED]/databases/(default)/documents/players?pageSize=100</code></pre>
                             <p>
                                 This completely exposed player records
                                 containing names, phone numbers, scores, and
@@ -760,7 +760,7 @@
                                 Another collection endpoint was completely
                                 readable:
                             </p>
-                            <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/tokens?pageSize=300</code></pre>
+                            <pre><code style="color:#cbd5e1;">GET /v1/projects/[READACTED]/databases/(default)/documents/tokens?pageSize=300</code></pre>
                             <p>
                                 This exposed active gameplay tokens tied to
                                 active QR sessions controlling game lives.
@@ -789,7 +789,7 @@
                                 The most critical exposure layout leaked
                                 complete administrator details:
                             </p>
-                            <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/admins</code></pre>
+                            <pre><code style="color:#cbd5e1;">GET /v1/projects/[REDACTED]/databases/(default)/documents/admins</code></pre>
                             <p>
                                 This exposed administrator records containing
                                 admin names and associated Gmail addresses.
