@@ -17,7 +17,7 @@
                 --border-solid: #222b38;
                 --divider-line: #1c232e;
 
-                /* Standardized baseline sizes for Desktop */
+                /* Crisp Desktop Typography System */
                 --font-base: 1.05rem;
                 --font-h2: 1.6rem;
             }
@@ -129,15 +129,15 @@
 
             .mobile-toc-wrapper {
                 display: none;
-                margin-bottom: 2rem;
+                margin-bottom: 2.5rem;
             }
 
             .mobile-toc-bar {
                 background-color: var(--surface);
                 border: 1px solid var(--border-solid);
-                padding: 0.75rem 1rem;
+                padding: 0.85rem 1.1rem;
                 border-radius: 4px;
-                font-size: 1rem;
+                font-size: 0.95rem;
                 color: var(--text-primary);
                 display: flex;
                 justify-content: space-between;
@@ -149,7 +149,7 @@
 
             .mobile-toc-bar::after {
                 content: "▼";
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 color: var(--accent-solid);
                 transition: transform 0.2s ease;
             }
@@ -163,10 +163,10 @@
                 background-color: #0a0d14;
                 border: 1px solid var(--border-solid);
                 border-top: none;
-                padding: 1rem;
+                padding: 1.25rem;
                 border-radius: 0 0 4px 4px;
                 flex-direction: column;
-                gap: 0.75rem;
+                gap: 0.85rem;
             }
 
             .mobile-toc-dropdown.open {
@@ -429,20 +429,20 @@
                 color: var(--meta-dim);
             }
 
-            /* --- Strict Pixel-Based Mobile Overrides --- */
+            /* --- Hardcoded Responsive Rendering Metrics Overrides --- */
             @media (max-width: 900px) {
                 body {
                     padding: 0 0 3rem 0;
                 }
 
                 .site-header {
-                    padding: 1.25rem 1rem 0.75rem 1rem;
+                    padding: 1.5rem 1.25rem 1rem 1.25rem;
                 }
 
                 .layout-grid {
                     grid-template-columns: 1fr;
                     gap: 0;
-                    padding: 1.5rem 1rem 0 1rem;
+                    padding: 1.5rem 1.25rem 0 1.25rem;
                     margin-top: 0;
                 }
 
@@ -468,7 +468,7 @@
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
-                    gap: 2rem;
+                    gap: 2.25rem;
                     z-index: 1000;
                     transition: right 0.3s cubic-bezier(0.25, 1, 0.5, 1);
                 }
@@ -479,7 +479,7 @@
 
                 nav#navMenu a {
                     color: var(--text-primary);
-                    font-size: 1.25rem;
+                    font-size: 1.35rem;
                 }
 
                 .menu-trigger.open span:nth-child(1) {
@@ -492,35 +492,40 @@
                     transform: translateY(-6px) rotate(-45deg);
                 }
 
-                /* Hardcoded pixel overrides to fix small text on mobile viewports */
+                /* Pixel locking scaling to keep typography readable on phones */
                 h1 {
-                    font-size: 1.55rem;
-                    line-height: 1.3;
+                    font-size: 1.7rem !important;
+                    line-height: 1.35 !important;
                 }
 
                 h2 {
-                    font-size: 1.25rem;
-                    margin-top: 2rem;
+                    font-size: 1.35rem !important;
+                    margin-top: 2.5rem !important;
                 }
 
                 p {
-                    font-size: 0.95rem; /* Forces a crisp reading size on phone viewports */
-                    line-height: 1.65;
-                    margin-bottom: 1.25rem;
+                    font-size: 1.05rem !important;
+                    line-height: 1.75 !important;
+                    margin-bottom: 1.4rem !important;
+                }
+
+                li {
+                    font-size: 1.05rem !important;
+                    line-height: 1.7 !important;
                 }
 
                 pre {
-                    padding: 1rem;
-                    margin: 1rem 0;
+                    padding: 1.15rem;
+                    margin: 1.25rem 0;
                 }
 
                 code {
-                    font-size: 0.85rem;
+                    font-size: 0.9rem;
                 }
 
                 .slider-wrapper {
-                    padding: 1.25rem;
-                    margin: 1.5rem 0;
+                    padding: 1.5rem;
+                    margin: 2rem 0;
                 }
             }
         </style>
@@ -959,7 +964,7 @@
 
             const sections = document.querySelectorAll("section");
             const tocItems = document.querySelectorAll(
-                ".sidebar-nav .toc-item",
+                ".sidebar-nav .toc-item, .mobile-toc-dropdown .toc-item",
             );
 
             window.addEventListener("scroll", () => {
