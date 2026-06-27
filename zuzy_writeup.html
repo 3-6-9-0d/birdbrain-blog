@@ -31,6 +31,7 @@
 
             html {
                 scroll-behavior: smooth;
+                overflow-x: hidden;
             }
 
             body {
@@ -41,9 +42,9 @@
                 color: var(--text-secondary);
                 font-size: var(--font-base);
                 line-height: 1.7;
+                overflow-x: hidden;
             }
 
-            /* Main Site Top Header Layout Frame */
             .site-header {
                 max-width: 1100px;
                 margin: 0 auto;
@@ -107,7 +108,6 @@
                     opacity 0.25s ease;
             }
 
-            /* Two-Column Layout Grid */
             .layout-grid {
                 display: grid;
                 grid-template-columns: 240px 1fr;
@@ -118,7 +118,6 @@
                 align-items: start;
             }
 
-            /* Desktop Left Sidebar */
             .sidebar-nav {
                 position: sticky;
                 top: 4rem;
@@ -262,6 +261,15 @@
                 color: var(--text-primary);
             }
 
+            .finding-block {
+                background-color: var(--surface);
+                border: 1px solid var(--border-solid);
+                border-radius: 6px;
+                padding: 1.75rem;
+                margin: 1.5rem 0 2rem 0;
+                scroll-margin-top: 3rem;
+            }
+
             p {
                 margin-top: 0;
                 margin-bottom: 1.6rem;
@@ -299,6 +307,7 @@
                 overflow-x: auto;
                 margin: 1.5rem 0;
                 border-radius: 6px;
+                max-width: 100%;
             }
 
             pre code {
@@ -310,79 +319,22 @@
                 white-space: pre;
             }
 
+            /* Proof-of-concept evidence layout frames */
+            .poc-image {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                margin: 1.5rem 0 2rem 0;
+                border: 1px solid var(--border-solid);
+                border-radius: 6px;
+            }
+
             .breakable-url-block {
                 display: block;
                 max-width: 100%;
                 word-wrap: break-word;
                 white-space: pre-wrap;
-            }
-
-            ul {
-                margin-top: 0;
-                margin-bottom: 1.5rem;
-                padding-left: 1.5rem;
-            }
-
-            li {
-                margin-bottom: 0.5rem;
-            }
-
-            .slider-wrapper {
-                position: relative;
-                background-color: var(--surface);
-                border: 1px solid var(--border-solid);
-                border-radius: 6px;
-                padding: 2rem;
-                margin: 2.5rem 0;
-                overflow: hidden;
-                scroll-margin-top: 3rem;
-            }
-
-            .slider-container {
-                display: flex;
-                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-                width: 100%;
-            }
-
-            .slide {
-                min-width: 100%;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-
-            .slide.active {
-                opacity: 1;
-            }
-
-            .slider-controls {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-top: 1.5rem;
-                padding-top: 1rem;
-                border-top: 1px solid var(--border-solid);
-                font-family: "SFMono-Regular", Consolas, monospace;
-                font-size: 0.85rem;
-            }
-
-            .slider-btn {
-                background: none;
-                border: none;
-                color: var(--accent-solid);
-                cursor: pointer;
-                font-family: inherit;
-                font-size: 1rem;
-                padding: 0.2rem 0.5rem;
-                transition: opacity 0.2s ease;
-            }
-
-            .slider-btn:disabled {
-                opacity: 0.2;
-                cursor: not-allowed;
-            }
-
-            .slider-status {
-                color: var(--meta-dim);
             }
 
             .term-ref {
@@ -433,39 +385,31 @@
                 color: var(--meta-dim);
             }
 
-            /* --- Complete Mobile Rendering Configs Update --- */
             @media (max-width: 900px) {
                 body {
                     padding: 0 0 3rem 0;
                 }
-
-                /* Locks header elements flush to full phone width */
                 .site-header {
                     width: 100%;
                     max-width: 100%;
                     padding: 1.5rem 1.25rem 1rem 1.25rem;
                 }
-
                 .layout-grid {
-                    display: block; /* Unrolls grid boundaries to ensure 100% width deployment */
+                    display: block;
                     width: 100%;
                     max-width: 100%;
                     padding: 1.5rem 1.25rem 0 1.25rem;
                     margin-top: 0;
                 }
-
                 .sidebar-nav {
                     display: none;
                 }
-
                 .mobile-toc-wrapper {
                     display: block;
                 }
-
                 .menu-trigger {
                     display: block;
                 }
-
                 nav#navMenu {
                     position: fixed;
                     top: 0;
@@ -480,16 +424,13 @@
                     z-index: 1000;
                     transition: right 0.3s cubic-bezier(0.25, 1, 0.5, 1);
                 }
-
                 nav#navMenu.open {
                     right: 0;
                 }
-
                 nav#navMenu a {
                     color: var(--text-primary);
                     font-size: 1.35rem;
                 }
-
                 .menu-trigger.open span:nth-child(1) {
                     transform: translateY(6px) rotate(45deg);
                 }
@@ -499,40 +440,30 @@
                 .menu-trigger.open span:nth-child(3) {
                     transform: translateY(-6px) rotate(-45deg);
                 }
-
                 h1 {
                     font-size: 1.7rem !important;
                     line-height: 1.35 !important;
                 }
-
                 h2 {
                     font-size: 1.35rem !important;
                     margin-top: 2.5rem !important;
                 }
-
                 p {
                     font-size: 1.05rem !important;
                     line-height: 1.75 !important;
                     margin-bottom: 1.4rem !important;
                 }
-
                 li {
                     font-size: 1.05rem !important;
                     line-height: 1.7 !important;
                 }
-
                 pre {
-                    padding: 1.15rem;
-                    margin: 1.25rem 0;
+                    max-width: 100%;
+                    overflow-x: auto;
                 }
-
-                code {
-                    font-size: 0.9rem;
-                }
-
-                .slider-wrapper {
-                    padding: 1.5rem;
-                    margin: 2rem 0;
+                pre code {
+                    white-space: pre;
+                    word-break: normal;
                 }
             }
         </style>
@@ -546,9 +477,7 @@
                 id="menuBtn"
                 aria-label="Toggle Navigation Menu"
             >
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
 
             <nav id="navMenu">
@@ -625,9 +554,9 @@
                     </header>
 
                     <section id="incident-origin">
-                        <B>
+                        <p>
                             What started as a completely ordinary visit to
-                            <b>Mouzy</b>, a fusion drink outlet, turned into an
+                            Mouzy, a fusion drink outlet, turned into an
                             unexpected security assessment. After paying, the
                             cashier handed us a small card with a QR code and
                             told us we could play a game called Zuzy Run to win
@@ -658,10 +587,10 @@
                             play and accumulate points for rewards. At first
                             glance, it looked like a typical promotional game.
                             But while interacting with it, the client-side logic
-                            seemed unusually heavy and session state appeared to
-                            be stored entirely locally. That usually means one
-                            thing: interesting things may be happening in the
-                            frontend.
+                            customarily felt unusually heavy and session state
+                            appeared to be stored entirely locally. That usually
+                            means one thing: interesting things may be happening
+                            in the frontend.
                         </p>
                         <p>
                             I started with standard passive recon checking
@@ -670,14 +599,13 @@
                             immediately exposed a standard Firebase
                             configuration object:
                         </p>
-                        <pre><code>const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "...",
-  messagingSenderId: "...",
-  appId: "..."
-}</code></pre>
+
+                        <img
+                            src="firebase.png"
+                            alt="Exposed Frontend Firebase Configuration"
+                            class="poc-image"
+                        />
+
                         <p>
                             An exposed Firebase API key alone is not
                             automatically a vulnerability; client configs are
@@ -710,6 +638,7 @@
                     <section id="critical-findings">
                         <h2>Critical Findings</h2>
 
+                        <!-- Block 1 -->
                         <div class="finding-block" id="finding-1">
                             <div
                                 style="
@@ -730,6 +659,13 @@
                                 requiring any authentication checks:
                             </p>
                             <pre><code style="color:#cbd5e1;">GET /v1/projects/[REDACTED]/databases/(default)/documents/players?pageSize=100</code></pre>
+
+                            <img
+                                src="players.png"
+                                alt="Unauthenticated Player Records Exposure"
+                                class="poc-image"
+                            />
+
                             <p>
                                 This completely exposed player records
                                 containing names, phone numbers, scores, and
@@ -741,6 +677,7 @@
                             </p>
                         </div>
 
+                        <!-- Block 2 -->
                         <div class="finding-block" id="finding-2">
                             <div
                                 style="
@@ -760,7 +697,14 @@
                                 Another collection endpoint was completely
                                 readable:
                             </p>
-                            <pre><code style="color:#cbd5e1;">GET /v1/projects/[READACTED]/databases/(default)/documents/tokens?pageSize=300</code></pre>
+                            <pre><code style="color:#cbd5e1;">GET /v1/projects/[REDACTED]/databases/(default)/documents/tokens?pageSize=300</code></pre>
+
+                            <img
+                                src="tokens.png"
+                                alt="Active Gameplay Session Tokens Leaked"
+                                class="poc-image"
+                            />
+
                             <p>
                                 This exposed active gameplay tokens tied to
                                 active QR sessions controlling game lives.
@@ -770,6 +714,7 @@
                             </p>
                         </div>
 
+                        <!-- Block 3 -->
                         <div class="finding-block" id="finding-3">
                             <div
                                 style="
@@ -790,6 +735,13 @@
                                 complete administrator details:
                             </p>
                             <pre><code style="color:#cbd5e1;">GET /v1/projects/[REDACTED]/databases/(default)/documents/admins</code></pre>
+
+                            <img
+                                src="admins.png"
+                                alt="Administrator Credentials Layout Exposure"
+                                class="poc-image"
+                            />
+
                             <p>
                                 This exposed administrator records containing
                                 admin names and associated Gmail addresses.
@@ -822,7 +774,6 @@
                                 >CRITICAL</span
                             >
                         </p>
-
                         <p>
                             I stopped testing immediately after confirming the
                             scope without dumping database assets, saving target
@@ -860,18 +811,8 @@
                             it handled live user logs, identity records, and
                             admin data. If it touches variables, lock it down.
                         </p>
-
-                        <h3>Final Thoughts</h3>
-                        <p>
-                            This finding started with a simple QR code on a card
-                            handed over with milk products. Security bugs rarely
-                            show up dramatically; most of the time they show up
-                            when you follow a basic instinct: &ldquo;Something
-                            feels off.&rdquo;
-                        </p>
                     </section>
                 </article>
-
                 <footer>&copy; 2026 birdbrain.dev // Volatile logs.</footer>
             </div>
         </div>
@@ -886,7 +827,6 @@
         <script>
             const menuBtn = document.getElementById("menuBtn");
             const navMenu = document.getElementById("navMenu");
-
             menuBtn.addEventListener("click", () => {
                 menuBtn.classList.toggle("open");
                 navMenu.classList.toggle("open");
@@ -900,7 +840,6 @@
             const mobileTocBar = document.getElementById("mobileTocBar");
             const mobileTocDropdown =
                 document.getElementById("mobileTocDropdown");
-
             mobileTocBar.addEventListener("click", () => {
                 mobileTocBar.classList.toggle("open");
                 mobileTocDropdown.classList.toggle("open");
@@ -915,41 +854,12 @@
                     });
                 });
 
-            const slider = document.getElementById("slider");
-            const slides = document.querySelectorAll(".slide");
-            const prevBtn = document.getElementById("prevBtn");
-            const nextBtn = document.getElementById("nextBtn");
-            const slideStatus = document.getElementById("slideStatus");
-            let currentIdx = 0;
-
-            function updateSlider() {
-                slider.style.transform = `translateX(-${currentIdx * 100}%)`;
-                slides.forEach((slide, idx) => {
-                    slide.classList.toggle("active", idx === currentIdx);
-                });
-                prevBtn.disabled = currentIdx === 0;
-                nextBtn.disabled = currentIdx === slides.length - 1;
-                slideStatus.textContent = `[Finding ${currentIdx + 1} / ${slides.length}]`;
-            }
-
-            prevBtn.addEventListener("click", () => {
-                if (currentIdx > 0) {
-                    currentIdx--;
-                    updateSlider();
-                }
-            });
-            nextBtn.addEventListener("click", () => {
-                if (currentIdx < slides.length - 1) {
-                    currentIdx++;
-                    updateSlider();
-                }
-            });
-
-            const sections = document.querySelectorAll("section");
+            const sections = document.querySelectorAll(
+                "section, .finding-block",
+            );
             const tocItems = document.querySelectorAll(
                 ".sidebar-nav .toc-item, .mobile-toc-dropdown .toc-item",
             );
-
             window.addEventListener("scroll", () => {
                 let currentSectionId = "";
                 sections.forEach((section) => {
@@ -958,7 +868,6 @@
                         currentSectionId = section.getAttribute("id");
                     }
                 });
-
                 if (currentSectionId) {
                     tocItems.forEach((item) => {
                         item.classList.toggle(
@@ -975,10 +884,8 @@
                     "Firebase: Google's mobile and web application platform. Client-side configs are safe to expose only if database/auth security rules are locked down.",
                 pii: "PII (Personally Identifiable Information): Any data that could potentially identify a specific individual, such as full names, phone numbers, or addresses.",
             };
-
             const panel = document.getElementById("glossaryPanel");
             const glossaryText = document.getElementById("glossaryText");
-
             document.querySelectorAll(".term-ref").forEach((term) => {
                 term.addEventListener("click", (e) => {
                     const lookup = e.target.getAttribute("data-term");
@@ -988,7 +895,6 @@
                     }
                 });
             });
-
             function closeGlossary() {
                 panel.classList.remove("open");
             }
