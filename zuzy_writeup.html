@@ -17,7 +17,6 @@
                 --border-solid: #222b38;
                 --divider-line: #1c232e;
 
-                /* Crisp Desktop Typography System */
                 --font-base: 1.05rem;
                 --font-h2: 1.6rem;
             }
@@ -42,12 +41,11 @@
                 color: var(--text-secondary);
                 font-size: var(--font-base);
                 line-height: 1.7;
-                max-width: 1200px;
-                margin: 0 auto;
             }
 
+            /* Main Site Top Header Layout Frame */
             .site-header {
-                max-width: 1200px;
+                max-width: 1100px;
                 margin: 0 auto;
                 padding: 2rem 2rem 1rem 2rem;
                 display: flex;
@@ -109,6 +107,7 @@
                     opacity 0.25s ease;
             }
 
+            /* Two-Column Layout Grid */
             .layout-grid {
                 display: grid;
                 grid-template-columns: 240px 1fr;
@@ -119,6 +118,7 @@
                 align-items: start;
             }
 
+            /* Desktop Left Sidebar */
             .sidebar-nav {
                 position: sticky;
                 top: 4rem;
@@ -129,6 +129,7 @@
 
             .mobile-toc-wrapper {
                 display: none;
+                width: 100%;
                 margin-bottom: 2.5rem;
             }
 
@@ -145,6 +146,7 @@
                 cursor: pointer;
                 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
                 font-weight: 500;
+                width: 100%;
             }
 
             .mobile-toc-bar::after {
@@ -167,6 +169,7 @@
                 border-radius: 0 0 4px 4px;
                 flex-direction: column;
                 gap: 0.85rem;
+                width: 100%;
             }
 
             .mobile-toc-dropdown.open {
@@ -208,6 +211,7 @@
             }
 
             .writeup-container {
+                width: 100%;
                 max-width: 720px;
                 padding-bottom: 6rem;
             }
@@ -429,19 +433,23 @@
                 color: var(--meta-dim);
             }
 
-            /* --- Hardcoded Responsive Rendering Metrics Overrides --- */
+            /* --- Complete Mobile Rendering Configs Update --- */
             @media (max-width: 900px) {
                 body {
                     padding: 0 0 3rem 0;
                 }
 
+                /* Locks header elements flush to full phone width */
                 .site-header {
+                    width: 100%;
+                    max-width: 100%;
                     padding: 1.5rem 1.25rem 1rem 1.25rem;
                 }
 
                 .layout-grid {
-                    grid-template-columns: 1fr;
-                    gap: 0;
+                    display: block; /* Unrolls grid boundaries to ensure 100% width deployment */
+                    width: 100%;
+                    max-width: 100%;
                     padding: 1.5rem 1.25rem 0 1.25rem;
                     margin-top: 0;
                 }
@@ -492,7 +500,6 @@
                     transform: translateY(-6px) rotate(-45deg);
                 }
 
-                /* Pixel locking scaling to keep typography readable on phones */
                 h1 {
                     font-size: 1.7rem !important;
                     line-height: 1.35 !important;
