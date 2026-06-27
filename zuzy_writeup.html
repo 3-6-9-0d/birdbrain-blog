@@ -8,7 +8,6 @@
         </title>
         <style>
             :root {
-                /* Exact Palette Match from index.html */
                 --bg: #0f131a;
                 --surface: #171d26;
                 --text-primary: #e2e8f0;
@@ -125,7 +124,6 @@
 
             h3 {
                 font-size: 1.2rem;
-                margin-top: 2rem;
                 margin-bottom: 0.5rem;
                 color: var(--text-primary);
             }
@@ -174,24 +172,6 @@
                 color: var(--text-secondary);
             }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin: 2rem 0;
-            }
-
-            th,
-            td {
-                padding: 0.75rem 1rem;
-                border: 1px solid var(--border-solid);
-                text-align: left;
-            }
-
-            th {
-                background-color: var(--surface);
-                color: var(--text-primary);
-            }
-
             ul {
                 margin-top: 0;
                 margin-bottom: 1.5rem;
@@ -200,6 +180,109 @@
 
             li {
                 margin-bottom: 0.5rem;
+            }
+
+            .list-highlight {
+                color: var(--text-primary);
+                font-weight: 600;
+            }
+
+            /* --- Slider Custom Mechanisms --- */
+            .slider-wrapper {
+                position: relative;
+                background-color: var(--surface);
+                border: 1px solid var(--border-solid);
+                border-radius: 6px;
+                padding: 2rem;
+                margin: 2.5rem 0;
+                overflow: hidden;
+            }
+
+            .slider-container {
+                display: flex;
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+                width: 100%;
+            }
+
+            .slide {
+                min-width: 100%;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .slide.active {
+                opacity: 1;
+            }
+
+            .slider-controls {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 1.5rem;
+                padding-top: 1rem;
+                border-top: 1px solid var(--border-solid);
+                font-family: "SFMono-Regular", Consolas, monospace;
+                font-size: 0.85rem;
+            }
+
+            .slider-btn {
+                background: none;
+                border: none;
+                color: var(--accent-solid);
+                cursor: pointer;
+                font-family: inherit;
+                font-size: 1rem;
+                padding: 0.2rem 0.5rem;
+                transition: opacity 0.2s ease;
+            }
+
+            .slider-btn:disabled {
+                opacity: 0.2;
+                cursor: not-allowed;
+            }
+
+            .slider-status {
+                color: var(--meta-dim);
+            }
+
+            /* --- Reference / Inline Glossary Animation --- */
+            .term-ref {
+                border-bottom: 1px dashed var(--accent-solid);
+                color: var(--text-primary);
+                cursor: pointer;
+            }
+
+            .glossary-panel {
+                position: fixed;
+                bottom: -100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #0a0d14;
+                border: 1px solid var(--accent-solid);
+                border-radius: 6px 6px 0 0;
+                padding: 1rem 1.5rem;
+                width: calc(100% - 3rem);
+                max-width: 760px;
+                z-index: 1000;
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+                transition: bottom 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+                font-family: "SFMono-Regular", Consolas, monospace;
+                font-size: 0.85rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .glossary-panel.open {
+                bottom: 0;
+            }
+
+            .glossary-close {
+                background: none;
+                border: none;
+                color: var(--meta-dim);
+                cursor: pointer;
+                font-size: 1.2rem;
             }
 
             footer {
@@ -241,56 +324,39 @@
                 <p>
                     What started as a completely ordinary visit to Mouzy, a
                     fusion drink outlet, turned into an unexpected security
-                    assessment.
+                    assessment. After paying, the cashier handed us a small card
+                    with a QR code and told us we could play a game called Zuzy
+                    Run to win rewards. Most people would scan the QR code, play
+                    the game, and move on. I scanned it and had a different
+                    thought: &ldquo;I wonder how secure this is.&rdquo;
                 </p>
-                <p>
-                    After paying, the cashier handed us a small card with a QR
-                    code and told us we could play a game called Zuzy Run to win
-                    rewards. Most people would scan the QR code, play the game,
-                    and move on. I scanned it and had a different thought:
-                </p>
-
-                <blockquote>
-                    &ldquo;I wonder how secure this is.&rdquo;
-                </blockquote>
 
                 <p>
                     That thought kicked off an unexpected security assessment
-                    that eventually led to the discovery of a critical Firebase
+                    that eventually led to the discovery of a critical
+                    <span class="term-ref" data-term="firebase">Firebase</span>
                     misconfiguration exposing sensitive production data.
                 </p>
 
-                <h2>The Target</h2>
+                <h2>The Target & Recon</h2>
                 <p>
-                    The QR code redirected to:<br />
-                    <code>https://zuzyrun.gamefaktory.com/?token=...</code>
-                </p>
-                <p>
-                    The application was a browser-based game where players used
+                    The QR code redirected to
+                    <code>https://zuzyrun.gamefaktory.com/?token=...</code>. The
+                    application was a browser-based game where players used
                     limited &ldquo;hearts&rdquo; (lives) to play and accumulate
                     points for rewards. At first glance, it looked like a
-                    typical promotional game. But while interacting with it, a
-                    few things immediately felt off:
-                </p>
-                <ul>
-                    <li>Client-side logic seemed heavy</li>
-                    <li>Session state appeared stored locally</li>
-                </ul>
-                <p>
-                    That usually means one thing: Interesting things may be
-                    happening in the frontend.
+                    typical promotional game. But while interacting with it, the
+                    client-side logic seemed unusually heavy and session state
+                    appeared to be stored entirely locally. That usually means
+                    one thing: interesting things may be happening in the
+                    frontend.
                 </p>
 
-                <h2>Initial Recon</h2>
-                <p>I started with standard passive recon:</p>
-                <ul>
-                    <li>Browser DevTools</li>
-                    <li>Network inspection</li>
-                    <li>Source code inspection</li>
-                    <li>Local storage review</li>
-                </ul>
                 <p>
-                    The frontend bundle exposed a Firebase configuration object:
+                    I started with standard passive recon checking DevTools,
+                    inspecting the network requests, and reviewing local storage
+                    layouts. The frontend bundle immediately exposed a standard
+                    Firebase configuration object:
                 </p>
                 <pre><code>const firebaseConfig = {
   apiKey: "...",
@@ -302,182 +368,238 @@
 }</code></pre>
 
                 <p>
-                    Now, an exposed Firebase API key alone is not automatically
-                    a vulnerability. Firebase client configs are often public by
-                    design. The real question is: Are backend security rules
-                    correctly configured? That became the focus.
+                    An exposed Firebase API key alone is not automatically a
+                    vulnerability; client configs are public by design. The real
+                    question is whether backend security rules are correctly
+                    configured. That became the core focus.
                 </p>
 
                 <h2>Firestore Enumeration</h2>
                 <p>
                     From the JavaScript bundle, I identified the Firebase
-                    project. That enabled testing Firestore&rsquo;s REST API.
-                    Firestore document paths follow this structure:
-                </p>
-                <pre><code>https://firestore.googleapis.com/v1/projects/PROJECT_ID/databases/(default)/documents/COLLECTION</code></pre>
-
-                <p>
-                    I began testing likely collection names referenced in the
+                    project and targeted Firestore&rsquo;s REST API. Firestore
+                    document paths follow a predictable layout:
+                    <code
+                        >https://firestore.googleapis.com/v1/projects/PROJECT_ID/databases/(default)/documents/COLLECTION</code
+                    >. I began testing likely collection names referenced in the
                     frontend. That&rsquo;s when things got serious.
                 </p>
 
-                <h2>Critical Findings</h2>
+                <div class="slider-wrapper">
+                    <div class="slider-container" id="slider">
+                        <div class="slide active">
+                            <div
+                                class="post-meta"
+                                style="margin-bottom: 0.5rem"
+                            >
+                                Finding #1
+                            </div>
+                            <h3 style="margin-top: 0">
+                                Unrestricted Player Data Access
+                            </h3>
+                            <p>
+                                The following endpoint returned data without
+                                requiring any authentication checks:
+                            </p>
+                            <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/players?pageSize=100</code></pre>
+                            <p>
+                                This completely exposed player records
+                                containing names, phone numbers, scores, and
+                                gameplay metadata. Because this is
+                                <span class="term-ref" data-term="pii">PII</span
+                                >, unauthorized users could essentially
+                                enumerate the entire active player database
+                                directly from Firestore.
+                            </p>
+                        </div>
 
-                <h3>Critical Finding #1: Unrestricted Player Data Access</h3>
-                <p>
-                    The following endpoint returned data without authentication:
-                </p>
-                <pre><code>https://firestore.googleapis.com/v1/projects/zuzu-run/databases/(default)/documents/players?pageSize=100</code></pre>
-                <p>This exposed player records containing:</p>
-                <ul>
-                    <li>Names</li>
-                    <li>Phone numbers</li>
-                    <li>Scores</li>
-                    <li>Gameplay metadata</li>
-                </ul>
-                <p>
-                    This is personally identifiable information (PII). At this
-                    point, the issue was no longer theoretical. Unauthorized
-                    users could enumerate real user data directly from
-                    Firestore.
-                </p>
+                        <div class="slide">
+                            <div
+                                class="post-meta"
+                                style="margin-bottom: 0.5rem"
+                            >
+                                Finding #2
+                            </div>
+                            <h3 style="margin-top: 0">
+                                Gameplay Token Exposure
+                            </h3>
+                            <p>
+                                Another collection endpoint was completely
+                                readable:
+                            </p>
+                            <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/tokens?pageSize=300</code></pre>
+                            <p>
+                                This exposed active gameplay tokens tied to
+                                active QR sessions controlling game lives.
+                                Obtaining valid tokens allowed session reuse,
+                                letting an attacker hijack active sessions and
+                                abuse reward distributions.
+                            </p>
+                        </div>
 
-                <h3>Critical Finding #2: Token Exposure</h3>
-                <p>Another collection was readable:</p>
-                <pre><code>https://firestore.googleapis.com/v1/projects/zuzu-run/databases/(default)/documents/tokens?pageSize=300</code></pre>
-                <p>
-                    This exposed active gameplay tokens. These tokens were tied
-                    to QR sessions and controlled access to game lives (hearts).
-                </p>
-                <p>By obtaining valid tokens, an attacker could:</p>
-                <ul>
-                    <li>Reuse active game sessions</li>
-                    <li>Gain additional hearts</li>
-                    <li>Continue playing indefinitely</li>
-                    <li>Potentially abuse reward mechanisms</li>
-                </ul>
-                <p>
-                    This transformed a simple data leak into a practical
-                    exploitation path.
-                </p>
+                        <div class="slide">
+                            <div
+                                class="post-meta"
+                                style="margin-bottom: 0.5rem"
+                            >
+                                Finding #3
+                            </div>
+                            <h3 style="margin-top: 0">
+                                Admin Collection Exposure
+                            </h3>
+                            <p>
+                                The most critical exposure layout leaked
+                                complete administrator details:
+                            </p>
+                            <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/admins</code></pre>
+                            <p>
+                                This exposed administrator records containing
+                                admin names and associated Gmail addresses.
+                                While passwords weren't directly leaked, mapping
+                                out admin identities significantly spikes the
+                                attack surface for targeted social engineering
+                                and phishing.
+                            </p>
+                        </div>
+                    </div>
 
-                <h3>Critical Finding #3: Admin Collection Exposure</h3>
-                <p>The most alarming discovery was:</p>
-                <pre><code>https://firestore.googleapis.com/v1/projects/zuzu-run/databases/(default)/documents/admins</code></pre>
-                <p>This exposed administrator records, including:</p>
-                <ul>
-                    <li>Admin names</li>
-                    <li>Gmail addresses</li>
-                </ul>
-                <p>
-                    Even though passwords were not exposed, leaking admin
-                    identities significantly increases attack surface for
-                    phishing, credential stuffing, and social engineering.
-                </p>
+                    <div class="slider-controls">
+                        <button class="slider-btn" id="prevBtn" disabled>
+                            &lt; prev_collection
+                        </button>
+                        <div class="slider-status" id="slideStatus">
+                            [Finding 1 / 3]
+                        </div>
+                        <button class="slider-btn" id="nextBtn">
+                            next_collection &gt;
+                        </button>
+                    </div>
+                </div>
 
-                <h2>Impact</h2>
+                <h2>Impact & Disclosures</h2>
                 <p>
                     The Firestore rules effectively allowed unauthenticated read
-                    access to sensitive collections. An attacker with basic
-                    Firebase knowledge could read player PII, enumerate admin
-                    accounts, harvest active tokens, abuse gameplay mechanics,
-                    and potentially manipulate rewards. Depending on write
-                    permissions, the impact could have escalated further.
+                    access across sensitive backend buckets. An attacker with
+                    basic structural knowledge could harvest player records,
+                    enumerate admin accounts, and capture active session keys.
+                </p>
+                <p>
+                    <strong>Severity Assessment:</strong>
+                    <span
+                        style="
+                            color: #fca5a5;
+                            font-weight: bold;
+                            font-family: &quot;SFMono-Regular&quot;, monospace;
+                        "
+                        >CRITICAL</span
+                    >
                 </p>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="border-color: var(--border-solid)">
-                                Metric
-                            </th>
-                            <th style="border-color: var(--border-solid)">
-                                Value
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="border-color: var(--border-solid)">
-                                <strong>Severity Assessment</strong>
-                            </td>
-                            <td style="border-color: var(--border-solid)">
-                                <span
-                                    style="
-                                        color: #fca5a5;
-                                        font-weight: bold;
-                                        font-family:
-                                            &quot;SFMono-Regular&quot;,
-                                            monospace;
-                                    "
-                                    >CRITICAL</span
-                                >
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h2>Responsible Disclosure</h2>
                 <p>
-                    I stopped immediately after confirming the scope. I did not:
-                </p>
-                <ul>
-                    <li>Dump the database</li>
-                    <li>Store user data</li>
-                    <li>Share any records</li>
-                    <li>Attempt destructive actions</li>
-                </ul>
-                <p>
-                    Instead, I drafted a disclosure report and contacted the
-                    vendor. My report summarized the vulnerability type,
-                    affected collections, impact, reproduction steps, and risk
-                    assessment.
-                </p>
-
-                <h3>Vendor Response</h3>
-                <p>
-                    To their credit, the response from GameFaktory was extremely
-                    fast and professional. They acknowledged the issue, accepted
-                    responsibility, and began remediation quickly. That is
-                    exactly how responsible disclosure should work.
+                    I stopped testing immediately after confirming the scope
+                    without dumping database assets, saving target logs, or
+                    running destructive tests. I drafted a disclosure report
+                    summarizing the flaw and contacted the vendor. To their
+                    credit, the response from GameFaktory was extremely fast and
+                    professional. They acknowledged the issue, accepted
+                    responsibility, and mitigated the rule paths quickly. That
+                    is exactly how responsible disclosure should work.
                 </p>
 
                 <h2>Lessons Learned</h2>
-
-                <h3>1. Public Firebase config is not the problem</h3>
                 <p>
-                    Many developers panic when they see exposed Firebase keys.
-                    That&rsquo;s usually not the issue. The issue is almost
-                    always: Bad Firestore security rules.
+                    <strong>Public configs aren't flaws:</strong> Don't panic
+                    because your frontend maps an API key. The issue is entirely
+                    dependent on backend access rules.
                 </p>
-
-                <h3>2. Frontend code reveals architecture</h3>
                 <p>
-                    Even minified JavaScript leaks valuable information:
-                    Collection names, Project IDs, API endpoints, and Business
-                    logic. Attackers use these clues. So should defenders.
+                    <strong>Frontend code leaks architecture:</strong> Even
+                    heavily minified source code maps database collections,
+                    routing variables, and business endpoints. Defenders need to
+                    verify these paths before attackers do.
                 </p>
-
-                <h3>3. Small apps need security too</h3>
                 <p>
-                    This wasn&rsquo;t a banking app. It was a promotional game.
-                    Yet it still handled user identities, rewards, admin
-                    accounts, and PII. Even &ldquo;simple&rdquo; systems need
-                    proper access control.
+                    <strong>Promotional scopes require protection:</strong> This
+                    wasn't a financial platform; it was a basic promotional loop
+                    running on a food truck item. Yet, it handled live user
+                    logs, identity records, and admin data. If it touches
+                    variables, lock it down.
                 </p>
 
                 <h2>Final Thoughts</h2>
                 <p>
-                    This bug started with something ordinary: A QR code on a
-                    card handed over with milk products. That tiny moment turned
-                    into a real-world security assessment and a critical
-                    finding. Security issues rarely announce themselves
-                    dramatically. Sometimes they begin with a simple instinct:
-                    &ldquo;Something feels off.&rdquo;
+                    This finding started with a simple QR code on a card handed
+                    over with milk products. Security bugs rarely show up
+                    dramatically; most of the time they show up when you follow
+                    a basic instinct: &ldquo;Something feels off.&rdquo;
                 </p>
             </main>
 
             <footer>&copy; 2026 birdbrain.dev // Volatile logs.</footer>
         </div>
+
+        <div class="glossary-panel" id="glossaryPanel">
+            <span id="glossaryText"></span>
+            <button class="glossary-close" onclick="closeGlossary()">
+                &times;
+            </button>
+        </div>
+
+        <script>
+            // Carousel Control Logic
+            const slider = document.getElementById("slider");
+            const slides = document.querySelectorAll(".slide");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+            const slideStatus = document.getElementById("slideStatus");
+            let currentIdx = 0;
+
+            function updateSlider() {
+                slider.style.transform = `translateX(-${currentIdx * 100}%)`;
+                slides.forEach((slide, idx) => {
+                    slide.classList.toggle("active", idx === currentIdx);
+                });
+                prevBtn.disabled = currentIdx === 0;
+                nextBtn.disabled = currentIdx === slides.length - 1;
+                slideStatus.textContent = `[Finding ${currentIdx + 1} / ${slides.length}]`;
+            }
+
+            prevBtn.addEventListener("click", () => {
+                if (currentIdx > 0) {
+                    currentIdx--;
+                    updateSlider();
+                }
+            });
+            nextBtn.addEventListener("click", () => {
+                if (currentIdx < slides.length - 1) {
+                    currentIdx++;
+                    updateSlider();
+                }
+            });
+
+            // Glossary Map Definition
+            const glossary = {
+                firebase:
+                    "Firebase: Google's mobile and web application platform. Client-side configs are safe to expose only if database/auth security rules are locked down.",
+                pii: "PII (Personally Identifiable Information): Any data that could potentially identify a specific individual, such as full names, phone numbers, or addresses.",
+            };
+
+            const panel = document.getElementById("glossaryPanel");
+            const glossaryText = document.getElementById("glossaryText");
+
+            document.querySelectorAll(".term-ref").forEach((term) => {
+                term.addEventListener("click", (e) => {
+                    const lookup = e.target.getAttribute("data-term");
+                    if (glossary[lookup]) {
+                        glossaryText.textContent = glossary[lookup];
+                        panel.classList.add("open");
+                    }
+                });
+            });
+
+            function closeGlossary() {
+                panel.classList.remove("open");
+            }
+        </script>
     </body>
 </html>
