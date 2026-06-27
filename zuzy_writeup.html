@@ -17,8 +17,8 @@
                 --border-solid: #222b38;
                 --divider-line: #1c232e;
 
-                --font-base: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
-                --font-h2: clamp(1.4rem, 1.3rem + 0.4vw, 1.75rem);
+                --font-base: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+                --font-h2: clamp(1.25rem, 1.2rem + 0.3vw, 1.5rem);
             }
 
             * {
@@ -40,21 +40,18 @@
                 background-color: var(--bg);
                 color: var(--text-secondary);
                 font-size: var(--font-base);
-                line-height: 1.8;
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 3rem 1.5rem;
+                line-height: 1.7;
             }
 
-            header {
+            /* Main Site Top Header Layout */
+            .site-header {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem 2rem 1rem 2rem;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                flex-wrap: wrap;
-                gap: 1.5rem;
-                padding-bottom: 1.5rem;
                 border-bottom: 2px solid var(--divider-line);
-                margin-bottom: 3rem;
             }
 
             .logo {
@@ -88,6 +85,70 @@
                 color: var(--accent-solid);
             }
 
+            /* Clean Two-Column Layout Grid matching your layout screenshot */
+            .layout-grid {
+                display: grid;
+                grid-template-columns: 240px 1fr;
+                gap: 4rem;
+                max-width: 1100px;
+                margin: 3rem auto 0 auto;
+                padding: 0 2rem;
+                align-items: start;
+            }
+
+            /* Left Sidebar Layout Frame - Dynamic Tracking Sticky Container */
+            .sidebar-nav {
+                position: sticky;
+                top: 3rem;
+                align-self: start;
+                max-height: calc(100vh - 6rem);
+                overflow-y: auto;
+                padding-right: 1rem;
+            }
+
+            .toc-title {
+                font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+                font-size: 1.05rem;
+                font-weight: 600;
+                color: var(--text-primary);
+                margin-bottom: 1.25rem;
+                letter-spacing: -0.2px;
+            }
+
+            .toc-links {
+                display: flex;
+                flex-direction: column;
+                gap: 0.65rem;
+            }
+
+            .toc-item {
+                color: var(--text-secondary);
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: all 0.15s ease;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .toc-item:hover,
+            .toc-item.active {
+                color: var(--text-primary);
+            }
+
+            /* Indented Subtopic Items */
+            .toc-sub {
+                padding-left: 1rem;
+                font-size: 0.85rem;
+                color: var(--meta-dim);
+            }
+
+            /* Main Article Body Layout Panel */
+            .writeup-container {
+                max-width: 720px;
+                padding-bottom: 6rem;
+            }
+
             .writeup-header {
                 margin-bottom: 2.5rem;
                 border-bottom: 1px solid var(--border-solid);
@@ -104,7 +165,7 @@
             }
 
             h1 {
-                font-size: clamp(1.8rem, 1.6rem + 0.5vw, 2.3rem);
+                font-size: clamp(1.6rem, 1.5rem + 0.5vw, 2.1rem);
                 color: var(--text-primary);
                 font-weight: 700;
                 line-height: 1.3;
@@ -119,19 +180,20 @@
 
             h2 {
                 font-size: var(--font-h2);
-                margin-top: 3rem;
+                margin-top: 3.5rem;
                 margin-bottom: 1rem;
                 color: var(--text-primary);
                 border-bottom: 1px solid var(--border-solid);
                 padding-bottom: 0.3rem;
-                scroll-margin-top: 2rem;
+                scroll-margin-top: 3rem;
             }
 
             h3 {
-                font-size: 1.2rem;
+                font-size: 1.15rem;
+                margin-top: 2rem;
                 margin-bottom: 0.5rem;
                 color: var(--text-primary);
-                scroll-margin-top: 2rem;
+                scroll-margin-top: 3rem;
             }
 
             p {
@@ -144,7 +206,7 @@
                 padding: 0.5rem 1.25rem;
                 color: var(--text-primary);
                 background-color: var(--surface);
-                border-left: 4px solid var(--accent-solid);
+                border-left: 3px solid var(--accent-solid);
                 border-radius: 0 4px 4px 0;
                 font-style: italic;
             }
@@ -159,7 +221,7 @@
 
             code {
                 padding: 0.15rem 0.4rem;
-                font-size: 0.95em;
+                font-size: 0.9em;
                 color: #fca5a5;
                 border-radius: 3px;
             }
@@ -181,61 +243,19 @@
             ul {
                 margin-top: 0;
                 margin-bottom: 1.5rem;
-                padding-left: 2rem;
+                padding-left: 1.5rem;
             }
 
             li {
                 margin-bottom: 0.5rem;
             }
 
-            /* --- Animated Table of Contents Menu Slider --- */
-            .toc-wrapper {
-                background-color: var(--surface);
-                border: 1px solid var(--border-solid);
-                border-radius: 6px;
-                padding: 1.5rem;
-                margin-bottom: 3rem;
-            }
-
-            .toc-title {
-                font-family: "SFMono-Regular", Consolas, monospace;
-                font-size: 1rem;
-                font-weight: 700;
+            .list-highlight {
                 color: var(--text-primary);
-                margin-bottom: 1rem;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
+                font-weight: 600;
             }
 
-            .toc-title::before {
-                content: ">";
-                color: var(--accent-solid);
-            }
-
-            .toc-links {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .toc-item {
-                color: var(--text-secondary);
-                text-decoration: none;
-                font-family: "SFMono-Regular", Consolas, monospace;
-                font-size: 0.9rem;
-                display: inline-flex;
-                align-items: center;
-                transition: all 0.2s ease;
-                padding: 0.1rem 0;
-            }
-
-            .toc-item:hover {
-                color: var(--accent-solid);
-                transform: translateX(4px);
-            }
-
-            /* --- Findings Content Slider --- */
+            /* --- Slider Content Layer Mechanisms --- */
             .slider-wrapper {
                 position: relative;
                 background-color: var(--surface);
@@ -293,7 +313,7 @@
                 color: var(--meta-dim);
             }
 
-            /* --- Reference / Inline Glossary Animation --- */
+            /* --- Reference Panel Animation Layout --- */
             .term-ref {
                 border-bottom: 1px dashed var(--accent-solid);
                 color: var(--text-primary);
@@ -340,12 +360,22 @@
                 font-family: "SFMono-Regular", Consolas, Monaco, monospace;
                 font-size: 0.8rem;
                 color: var(--meta-dim);
-                text-align: left;
+            }
+
+            /* Responsive Adjustments if display scales low */
+            @media (max-width: 900px) {
+                .layout-grid {
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                }
+                .sidebar-nav {
+                    display: none; /* Emulates standard desktop layout prioritization seen in image */
+                }
             }
         </style>
     </head>
     <body>
-        <header>
+        <header class="site-header">
             <a href="index.html" class="logo">birdbrain<span>.</span>dev</a>
             <nav>
                 <a href="index.html">/blog</a>
@@ -356,22 +386,11 @@
             </nav>
         </header>
 
-        <div class="writeup-container">
-            <header class="writeup-header">
-                <div class="site-title">Cloud Security / Web API</div>
-                <h1>
-                    Finding Bugs in Fusion Drinks: How a Promotional QR Code
-                    Exposed Production PII
-                </h1>
-                <div class="meta">
-                    Posted by Security Researcher &bull; Case Study
-                </div>
-            </header>
-
-            <nav class="toc-wrapper">
+        <div class="layout-grid">
+            <nav class="sidebar-nav">
                 <div class="toc-title">Table of Contents</div>
                 <div class="toc-links">
-                    <a href="#incident-origin" class="toc-item"
+                    <a href="#incident-origin" class="toc-item active"
                         >Incident Origin</a
                     >
                     <a href="#target-recon" class="toc-item"
@@ -383,6 +402,15 @@
                     <a href="#critical-findings" class="toc-item"
                         >Critical Findings</a
                     >
+                    <a href="#finding-1" class="toc-item toc-sub"
+                        >Understanding PII Access</a
+                    >
+                    <a href="#finding-2" class="toc-item toc-sub"
+                        >Token Session Leak</a
+                    >
+                    <a href="#finding-3" class="toc-item toc-sub"
+                        >Admin Exposure</a
+                    >
                     <a href="#impact-disclosures" class="toc-item"
                         >Impact & Disclosures</a
                     >
@@ -392,46 +420,66 @@
                 </div>
             </nav>
 
-            <main>
-                <h2 id="incident-origin">Incident Origin</h2>
-                <p>
-                    What started as a completely ordinary visit to Mouzy, a
-                    fusion drink outlet, turned into an unexpected security
-                    assessment. After paying, the cashier handed us a small card
-                    with a QR code and told us we could play a game called Zuzy
-                    Run to win rewards. Most people would scan the QR code, play
-                    the game, and move on. I scanned it and had a different
-                    thought: &ldquo;I wonder how secure this is.&rdquo;
-                </p>
+            <div class="writeup-container">
+                <article>
+                    <header class="writeup-header">
+                        <div class="site-title">Cloud Security / Web API</div>
+                        <h1>
+                            Finding Bugs in Fusion Drinks: How a Promotional QR
+                            Code Exposed Production PII
+                        </h1>
+                        <div class="meta">
+                            Posted by Security Researcher &bull; Case Study
+                        </div>
+                    </header>
 
-                <p>
-                    That thought kicked off an unexpected security assessment
-                    that eventually led to the discovery of a critical
-                    <span class="term-ref" data-term="firebase">Firebase</span>
-                    misconfiguration exposing sensitive production data.
-                </p>
+                    <section id="incident-origin">
+                        <p>
+                            What started as a completely ordinary visit to
+                            Mouzy, a fusion drink outlet, turned into an
+                            unexpected security assessment. After paying, the
+                            cashier handed us a small card with a QR code and
+                            told us we could play a game called Zuzy Run to win
+                            rewards. Most people would scan the QR code, play
+                            the game, and move on. I scanned it and had a
+                            different thought: &ldquo;I wonder how secure this
+                            is.&rdquo;
+                        </p>
+                        <p>
+                            That thought kicked off an unexpected security
+                            assessment that eventually led to the discovery of a
+                            critical
+                            <span class="term-ref" data-term="firebase"
+                                >Firebase</span
+                            >
+                            misconfiguration exposing sensitive production data.
+                        </p>
+                    </section>
 
-                <h2 id="target-recon">The Target & Recon</h2>
-                <p>
-                    The QR code redirected to
-                    <code>https://zuzyrun.gamefaktory.com/?token=...</code>. The
-                    application was a browser-based game where players used
-                    limited &ldquo;hearts&rdquo; (lives) to play and accumulate
-                    points for rewards. At first glance, it looked like a
-                    typical promotional game. But while interacting with it, the
-                    client-side logic seemed unusually heavy and session state
-                    appeared to be stored entirely locally. That usually means
-                    one thing: interesting things may be happening in the
-                    frontend.
-                </p>
-
-                <p>
-                    I started with standard passive recon checking DevTools,
-                    inspecting the network requests, and reviewing local storage
-                    layouts. The frontend bundle immediately exposed a standard
-                    Firebase configuration object:
-                </p>
-                <pre><code>const firebaseConfig = {
+                    <section id="target-recon">
+                        <h2>The Target & Recon</h2>
+                        <p>
+                            The QR code redirected to
+                            <code
+                                >https://zuzyrun.gamefaktory.com/?token=...</code
+                            >. The application was a browser-based game where
+                            players used limited &ldquo;hearts&rdquo; (lives) to
+                            play and accumulate points for rewards. At first
+                            glance, it looked like a typical promotional game.
+                            But while interacting with it, the client-side logic
+                            seemed unusually heavy and session state appeared to
+                            be stored entirely locally. That usually means one
+                            thing: interesting things may be happening in the
+                            frontend.
+                        </p>
+                        <p>
+                            I started with standard passive recon checking
+                            DevTools, inspecting the network requests, and
+                            reviewing local storage layouts. The frontend bundle
+                            immediately exposed a standard Firebase
+                            configuration object:
+                        </p>
+                        <pre><code>const firebaseConfig = {
   apiKey: "...",
   authDomain: "",
   projectId: "",
@@ -439,177 +487,205 @@
   messagingSenderId: "...",
   appId: "..."
 }</code></pre>
+                        <p>
+                            An exposed Firebase API key alone is not
+                            automatically a vulnerability; client configs are
+                            public by design. The real question is whether
+                            backend security rules are correctly configured.
+                            That became the core focus.
+                        </p>
+                    </section>
 
-                <p>
-                    An exposed Firebase API key alone is not automatically a
-                    vulnerability; client configs are public by design. The real
-                    question is whether backend security rules are correctly
-                    configured. That became the core focus.
-                </p>
+                    <section id="firestore-enumeration">
+                        <h2>Firestore Enumeration</h2>
+                        <p>
+                            From the JavaScript bundle, I identified the
+                            Firebase project and targeted Firestore&rsquo;s REST
+                            API. Firestore document paths follow a predictable
+                            layout:
+                            <code
+                                >https://firestore.googleapis.com/v1/projects/PROJECT_ID/databases/(default)/documents/COLLECTION</code
+                            >. I began testing likely collection names
+                            referenced in the frontend. That&rsquo;s when things
+                            got serious.
+                        </p>
+                    </section>
 
-                <h2 id="firestore-enumeration">Firestore Enumeration</h2>
-                <p>
-                    From the JavaScript bundle, I identified the Firebase
-                    project and targeted Firestore&rsquo;s REST API. Firestore
-                    document paths follow a predictable layout:
-                    <code
-                        >https://firestore.googleapis.com/v1/projects/PROJECT_ID/databases/(default)/documents/COLLECTION</code
-                    >. I began testing likely collection names referenced in the
-                    frontend. That&rsquo;s when things got serious.
-                </p>
+                    <section id="critical-findings">
+                        <h2>Critical Findings</h2>
+                        <div class="slider-wrapper">
+                            <div class="slider-container" id="slider">
+                                <div class="slide active" id="finding-1">
+                                    <div
+                                        class="post-meta"
+                                        style="margin-bottom: 0.5rem"
+                                    >
+                                        Finding #1
+                                    </div>
+                                    <h3 style="margin-top: 0">
+                                        Unrestricted Player Data Access
+                                    </h3>
+                                    <p>
+                                        The following endpoint returned data
+                                        without requiring any authentication
+                                        checks:
+                                    </p>
+                                    <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/players?pageSize=100</code></pre>
+                                    <p>
+                                        This completely exposed player records
+                                        containing names, phone numbers, scores,
+                                        and gameplay metadata. Because this is
+                                        <span class="term-ref" data-term="pii"
+                                            >PII</span
+                                        >, unauthorized users could essentially
+                                        enumerate the entire active player
+                                        database directly from Firestore.
+                                    </p>
+                                </div>
 
-                <h2 id="critical-findings">Critical Findings</h2>
-                <div class="slider-wrapper">
-                    <div class="slider-container" id="slider">
-                        <div class="slide active">
-                            <div
-                                class="post-meta"
-                                style="margin-bottom: 0.5rem"
-                            >
-                                Finding #1
+                                <div class="slide" id="finding-2">
+                                    <div
+                                        class="post-meta"
+                                        style="margin-bottom: 0.5rem"
+                                    >
+                                        Finding #2
+                                    </div>
+                                    <h3 style="margin-top: 0">
+                                        Gameplay Token Exposure
+                                    </h3>
+                                    <p>
+                                        Another collection endpoint was
+                                        completely readable:
+                                    </p>
+                                    <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/tokens?pageSize=300</code></pre>
+                                    <p>
+                                        This exposed active gameplay tokens tied
+                                        to active QR sessions controlling game
+                                        lives. Obtaining valid tokens allowed
+                                        session reuse, letting an attacker
+                                        hijack active sessions and abuse reward
+                                        distributions.
+                                    </p>
+                                </div>
+
+                                <div class="slide" id="finding-3">
+                                    <div
+                                        class="post-meta"
+                                        style="margin-bottom: 0.5rem"
+                                    >
+                                        Finding #3
+                                    </div>
+                                    <h3 style="margin-top: 0">
+                                        Admin Collection Exposure
+                                    </h3>
+                                    <p>
+                                        The most critical exposure layout leaked
+                                        complete administrator details:
+                                    </p>
+                                    <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/admins</code></pre>
+                                    <p>
+                                        This exposed administrator records
+                                        containing admin names and associated
+                                        Gmail addresses. While passwords weren't
+                                        directly leaked, mapping out admin
+                                        identities significantly spikes the
+                                        attack surface for targeted social
+                                        engineering and phishing.
+                                    </p>
+                                </div>
                             </div>
-                            <h3 style="margin-top: 0">
-                                Unrestricted Player Data Access
-                            </h3>
-                            <p>
-                                The following endpoint returned data without
-                                requiring any authentication checks:
-                            </p>
-                            <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/players?pageSize=100</code></pre>
-                            <p>
-                                This completely exposed player records
-                                containing names, phone numbers, scores, and
-                                gameplay metadata. Because this is
-                                <span class="term-ref" data-term="pii">PII</span
-                                >, unauthorized users could essentially
-                                enumerate the entire active player database
-                                directly from Firestore.
-                            </p>
-                        </div>
 
-                        <div class="slide">
-                            <div
-                                class="post-meta"
-                                style="margin-bottom: 0.5rem"
-                            >
-                                Finding #2
+                            <div class="slider-controls">
+                                <button
+                                    class="slider-btn"
+                                    id="prevBtn"
+                                    disabled
+                                >
+                                    &lt; prev_collection
+                                </button>
+                                <div class="slider-status" id="slideStatus">
+                                    [Finding 1 / 3]
+                                </div>
+                                <button class="slider-btn" id="nextBtn">
+                                    next_collection &gt;
+                                </button>
                             </div>
-                            <h3 style="margin-top: 0">
-                                Gameplay Token Exposure
-                            </h3>
-                            <p>
-                                Another collection endpoint was completely
-                                readable:
-                            </p>
-                            <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/tokens?pageSize=300</code></pre>
-                            <p>
-                                This exposed active gameplay tokens tied to
-                                active QR sessions controlling game lives.
-                                Obtaining valid tokens allowed session reuse,
-                                letting an attacker hijack active sessions and
-                                abuse reward distributions.
-                            </p>
                         </div>
+                    </section>
 
-                        <div class="slide">
-                            <div
-                                class="post-meta"
-                                style="margin-bottom: 0.5rem"
+                    <section id="impact-disclosures">
+                        <h2>Impact & Disclosures</h2>
+                        <p>
+                            The Firestore rules effectively allowed
+                            unauthenticated read access across sensitive backend
+                            buckets. An attacker with basic structural knowledge
+                            could harvest player records, enumerate admin
+                            accounts, and capture active session keys.
+                        </p>
+                        <p>
+                            <strong>Severity Assessment:</strong>
+                            <span
+                                style="
+                                    color: #fca5a5;
+                                    font-weight: bold;
+                                    font-family:
+                                        &quot;SFMono-Regular&quot;, monospace;
+                                "
+                                >CRITICAL</span
                             >
-                                Finding #3
-                            </div>
-                            <h3 style="margin-top: 0">
-                                Admin Collection Exposure
-                            </h3>
-                            <p>
-                                The most critical exposure layout leaked
-                                complete administrator details:
-                            </p>
-                            <pre><code style="color:#cbd5e1;">GET /v1/projects/zuzu-run/databases/(default)/documents/admins</code></pre>
-                            <p>
-                                This exposed administrator records containing
-                                admin names and associated Gmail addresses.
-                                While passwords weren't directly leaked, mapping
-                                out admin identities significantly spikes the
-                                attack surface for targeted social engineering
-                                and phishing.
-                            </p>
-                        </div>
-                    </div>
+                        </p>
 
-                    <div class="slider-controls">
-                        <button class="slider-btn" id="prevBtn" disabled>
-                            &lt; prev_collection
-                        </button>
-                        <div class="slider-status" id="slideStatus">
-                            [Finding 1 / 3]
-                        </div>
-                        <button class="slider-btn" id="nextBtn">
-                            next_collection &gt;
-                        </button>
-                    </div>
-                </div>
+                        <p>
+                            I stopped testing immediately after confirming the
+                            scope without dumping database assets, saving target
+                            logs, or running destructive tests. I drafted a
+                            disclosure report summarizing the flaw and contacted
+                            the vendor. To their credit, the response from
+                            GameFaktory was extremely fast and professional.
+                            They acknowledged the issue, accepted
+                            responsibility, and mitigated the rule paths
+                            quickly. That is exactly how responsible disclosure
+                            should work.
+                        </p>
+                    </section>
 
-                <h2 id="impact-disclosures">Impact & Disclosures</h2>
-                <p>
-                    The Firestore rules effectively allowed unauthenticated read
-                    access across sensitive backend buckets. An attacker with
-                    basic structural knowledge could harvest player records,
-                    enumerate admin accounts, and capture active session keys.
-                </p>
-                <p>
-                    <strong>Severity Assessment:</strong>
-                    <span
-                        style="
-                            color: #fca5a5;
-                            font-weight: bold;
-                            font-family: &quot;SFMono-Regular&quot;, monospace;
-                        "
-                        >CRITICAL</span
-                    >
-                </p>
+                    <section id="lessons-learned">
+                        <h2>Lessons Learned</h2>
+                        <p>
+                            <strong>Public configs aren't flaws:</strong> Don't
+                            panic because your frontend maps an API key. The
+                            issue is entirely dependent on backend access rules.
+                        </p>
+                        <p>
+                            <strong>Frontend code leaks architecture:</strong>
+                            Even heavily minified source code maps database
+                            collections, routing variables, and business
+                            endpoints. Defenders need to verify these paths
+                            before attackers do.
+                        </p>
+                        <p>
+                            <strong
+                                >Promotional scopes require protection:</strong
+                            >
+                            This wasn't a financial platform; it was a basic
+                            promotional loop running on a food truck item. Yet,
+                            it handled live user logs, identity records, and
+                            admin data. If it touches variables, lock it down.
+                        </p>
 
-                <p>
-                    I stopped testing immediately after confirming the scope
-                    without dumping database assets, saving target logs, or
-                    running destructive tests. I drafted a disclosure report
-                    summarizing the flaw and contacted the vendor. To their
-                    credit, the response from GameFaktory was extremely fast and
-                    professional. They acknowledged the issue, accepted
-                    responsibility, and mitigated the rule paths quickly. That
-                    is exactly how responsible disclosure should work.
-                </p>
+                        <h3>Final Thoughts</h3>
+                        <p>
+                            This finding started with a simple QR code on a card
+                            handed over with milk products. Security bugs rarely
+                            show up dramatically; most of the time they show up
+                            when you follow a basic instinct: &ldquo;Something
+                            feels off.&rdquo;
+                        </p>
+                    </section>
+                </article>
 
-                <h2 id="lessons-learned">Lessons Learned</h2>
-                <p>
-                    <strong>Public configs aren't flaws:</strong> Don't panic
-                    because your frontend maps an API key. The issue is entirely
-                    dependent on backend access rules.
-                </p>
-                <p>
-                    <strong>Frontend code leaks architecture:</strong> Even
-                    heavily minified source code maps database collections,
-                    routing variables, and business endpoints. Defenders need to
-                    verify these paths before attackers do.
-                </p>
-                <p>
-                    <strong>Promotional scopes require protection:</strong> This
-                    wasn't a financial platform; it was a basic promotional loop
-                    running on a food truck item. Yet, it handled live user
-                    logs, identity records, and admin data. If it touches
-                    variables, lock it down.
-                </p>
-
-                <h2>Final Thoughts</h2>
-                <p>
-                    This finding started with a simple QR code on a card handed
-                    over with milk products. Security bugs rarely show up
-                    dramatically; most of the time they show up when you follow
-                    a basic instinct: &ldquo;Something feels off.&rdquo;
-                </p>
-            </main>
-
-            <footer>&copy; 2026 birdbrain.dev // Volatile logs.</footer>
+                <footer>&copy; 2026 birdbrain.dev // Volatile logs.</footer>
+            </div>
         </div>
 
         <div class="glossary-panel" id="glossaryPanel">
@@ -620,7 +696,7 @@
         </div>
 
         <script>
-            // Carousel Control Logic
+            // Carousel Slider Logic Configurations
             const slider = document.getElementById("slider");
             const slides = document.querySelectorAll(".slide");
             const prevBtn = document.getElementById("prevBtn");
@@ -651,7 +727,31 @@
                 }
             });
 
-            // Glossary Map Definition
+            // Active Track Sidebar Highlighting configuration logic
+            const sections = document.querySelectorAll("section, h2, h1");
+            const tocItems = document.querySelectorAll(".toc-item");
+
+            window.addEventListener("scroll", () => {
+                let currentSectionId = "";
+                sections.forEach((section) => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 120) {
+                        currentSectionId = section.getAttribute("id");
+                    }
+                });
+
+                if (currentSectionId) {
+                    tocItems.forEach((item) => {
+                        item.classList.toggle(
+                            "active",
+                            item.getAttribute("href") ===
+                                `#${currentSectionId}`,
+                        );
+                    });
+                }
+            });
+
+            // Inline Reference Display Parameters
             const glossary = {
                 firebase:
                     "Firebase: Google's mobile and web application platform. Client-side configs are safe to expose only if database/auth security rules are locked down.",
