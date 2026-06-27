@@ -6,22 +6,19 @@
         <title>birdbrain.dev // Security Research</title>
         <style>
             :root {
-                /* Palette extracted from the Kirokaze artwork */
-                --bg: #0f131a; /* Deep slate midnight blue */
-                --surface: #171d26; /* Solid, opaque gray-blue canvas */
-                --text-primary: #e2e8f0; /* Crisp, high-visibility white-gray */
-                --text-secondary: #94a3b8; /* Muted slate for clean reading */
-                --meta-dim: #52637a; /* Low-contrast label color */
-                --accent-solid: #f59e0b; /* Warm sunset amber matching the terminal screen */
-                --border-solid: #222b38; /* Sharp layout division lines */
-                --divider-line: #1c232e; /* Muted structural divider line */
+                --bg: #0f131a;
+                --surface: #171d26;
+                --text-primary: #e2e8f0;
+                --text-secondary: #94a3b8;
+                --meta-dim: #52637a;
+                --accent-solid: #f59e0b;
+                --border-solid: #222b38;
+                --divider-line: #1c232e;
 
-                /* High-Res Fluid Typography */
                 --font-base: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
                 --font-h2: clamp(1.4rem, 1.3rem + 0.4vw, 1.75rem);
             }
 
-            /* High-DPI Display Optimization & Reset */
             * {
                 box-sizing: border-box;
                 margin: 0;
@@ -47,10 +44,9 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                flex-wrap: wrap;
-                gap: 1.5rem;
                 padding-bottom: 1.5rem;
                 border-bottom: 2px solid var(--divider-line);
+                position: relative;
             }
 
             .logo {
@@ -61,6 +57,7 @@
                 text-decoration: none;
                 text-transform: lowercase;
                 letter-spacing: 0.5px;
+                z-index: 1001;
             }
 
             .logo span {
@@ -84,7 +81,26 @@
                 color: var(--accent-solid);
             }
 
-            /* Cinematic Hero Window for the Pixel Art Loop */
+            .menu-trigger {
+                display: none;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0.5rem;
+                z-index: 1001;
+            }
+
+            .menu-trigger span {
+                display: block;
+                width: 22px;
+                height: 2px;
+                background-color: var(--text-primary);
+                margin: 4px 0;
+                transition:
+                    transform 0.25s ease,
+                    opacity 0.25s ease;
+            }
+
             .hero-window {
                 width: 100%;
                 height: 280px;
@@ -103,7 +119,6 @@
                 display: block;
             }
 
-            /* Content Cards with the Structural Left-Border Indicator */
             .post-card {
                 background-color: var(--surface);
                 border: 1px solid var(--border-solid);
@@ -145,10 +160,6 @@
                 transition: color 0.15s ease;
             }
 
-            .post-title a:hover {
-                color: var(--accent-solid);
-            }
-
             .post-excerpt {
                 color: var(--text-secondary);
                 margin-bottom: 1.5rem;
@@ -162,15 +173,6 @@
                 gap: 1rem;
             }
 
-            .post-tags span {
-                transition: color 0.15s ease;
-            }
-
-            .post-tags span:hover {
-                color: var(--text-primary);
-                cursor: pointer;
-            }
-
             footer {
                 margin-top: 6rem;
                 border-top: 1px solid var(--border-solid);
@@ -179,12 +181,76 @@
                 font-size: 0.8rem;
                 color: var(--meta-dim);
             }
+
+            @media (max-width: 640px) {
+                body {
+                    padding: 1.5rem 1rem;
+                }
+
+                .menu-trigger {
+                    display: block;
+                }
+
+                nav {
+                    position: fixed;
+                    top: 0;
+                    right: -100%;
+                    width: 100%;
+                    height: 100vh;
+                    background-color: rgba(15, 19, 26, 0.98);
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 2.5rem;
+                    font-size: 1.2rem;
+                    z-index: 1000;
+                    transition: right 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+                }
+
+                nav.open {
+                    right: 0;
+                }
+
+                nav a {
+                    color: var(--text-primary);
+                }
+
+                .menu-trigger.open span:nth-child(1) {
+                    transform: translateY(6px) rotate(45deg);
+                }
+                .menu-trigger.open span:nth-child(2) {
+                    opacity: 0;
+                }
+                .menu-trigger.open span:nth-child(3) {
+                    transform: translateY(-6px) rotate(-45deg);
+                }
+
+                .hero-window {
+                    height: 180px;
+                    margin-bottom: 2.5rem;
+                }
+
+                .post-card {
+                    padding: 1.5rem;
+                }
+            }
         </style>
     </head>
     <body>
         <header>
             <a href="index.html" class="logo">birdbrain<span>.</span>dev</a>
-            <nav>
+
+            <button
+                class="menu-trigger"
+                id="menuBtn"
+                aria-label="Toggle Navigation Menu"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav id="navMenu">
                 <a href="index.html">/blog</a>
                 <a href="#">/projects</a>
                 <a href="htb.html">/htb</a>
@@ -193,7 +259,6 @@
             </nav>
         </header>
 
-        <!-- The Visual Window Element -->
         <div class="hero-window">
             <img
                 src="df1wdk7-fa62d5b6-a1b2-4b2b-b407-02e737476148.gif"
@@ -202,11 +267,10 @@
         </div>
 
         <main>
-            <!-- Only Active Post: Firebase Case Study Card -->
             <article class="post-card">
                 <div class="post-meta">Cloud Security / Web API</div>
                 <h2 class="post-title">
-                    <a href="zuzy_writeup.html"
+                    <a href="zuzy-writeup.html"
                         >How a QR Code Led to a Critical Security Finding</a
                     >
                 </h2>
@@ -225,5 +289,20 @@
         </main>
 
         <footer>&copy; 2026 birdbrain.dev // Volatile logs.</footer>
+
+        <script>
+            const menuBtn = document.getElementById("menuBtn");
+            const navMenu = document.getElementById("navMenu");
+
+            menuBtn.addEventListener("click", () => {
+                menuBtn.classList.toggle("open");
+                navMenu.classList.toggle("open");
+                document.body.style.overflow = navMenu.classList.contains(
+                    "open",
+                )
+                    ? "hidden"
+                    : "";
+            });
+        </script>
     </body>
 </html>
