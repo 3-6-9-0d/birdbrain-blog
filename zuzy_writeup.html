@@ -4,166 +4,230 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>
-            Finding Bugs in Fusion Drinks: How a Promotional QR Code Exposed
-            Production PII
+            birdbrain.dev // How a QR Code Led to a Critical Security Finding
         </title>
         <style>
             :root {
-                --bg-color: #0d1117;
-                --text-color: #c9d1d9;
-                --text-muted: #8b949e;
-                --accent-color: #58a6ff;
-                --card-bg: #161b22;
-                --border-color: #30363d;
-                --code-bg: #21262d;
-                --quote-border: #388bfd;
+                /* Exact Palette Match from index.html */
+                --bg: #0f131a;
+                --surface: #171d26;
+                --text-primary: #e2e8f0;
+                --text-secondary: #94a3b8;
+                --meta-dim: #52637a;
+                --accent-solid: #f59e0b;
+                --border-solid: #222b38;
+                --divider-line: #1c232e;
+
+                --font-base: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+                --font-h2: clamp(1.4rem, 1.3rem + 0.4vw, 1.75rem);
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
 
             body {
                 font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
-                    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-                background-color: var(--bg-color);
-                color: var(--text-color);
-                line-height: 1.6;
-                margin: 0;
-                padding: 0;
-            }
-
-            .container {
-                max-width: 760px;
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                background-color: var(--bg);
+                color: var(--text-secondary);
+                font-size: var(--font-base);
+                line-height: 1.8;
+                max-width: 800px;
                 margin: 0 auto;
-                padding: 2rem 1.5rem;
+                padding: 3rem 1.5rem;
             }
 
             header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+                padding-bottom: 1.5rem;
+                border-bottom: 2px solid var(--divider-line);
+                margin-bottom: 3rem;
+            }
+
+            .logo {
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                text-decoration: none;
+                text-transform: lowercase;
+                letter-spacing: 0.5px;
+            }
+
+            .logo span {
+                color: var(--accent-solid);
+            }
+
+            nav {
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                display: flex;
+                gap: 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            nav a {
+                color: var(--meta-dim);
+                text-decoration: none;
+                transition: color 0.15s ease;
+            }
+
+            nav a:hover {
+                color: var(--accent-solid);
+            }
+
+            .writeup-header {
                 margin-bottom: 2.5rem;
-                border-bottom: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--border-solid);
                 padding-bottom: 1.5rem;
             }
 
             .site-title {
-                font-size: 0.9rem;
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                font-size: 0.8rem;
+                color: var(--accent-solid);
                 text-transform: uppercase;
-                letter-spacing: 2px;
-                color: var(--accent-color);
-                margin-bottom: 1rem;
-                font-weight: bold;
+                letter-spacing: 1px;
+                margin-bottom: 0.75rem;
             }
 
             h1 {
-                font-size: 2.2rem;
-                line-height: 1.25;
+                font-size: clamp(1.8rem, 1.6rem + 0.5vw, 2.3rem);
+                color: var(--text-primary);
+                font-weight: 700;
+                line-height: 1.3;
                 margin-bottom: 1rem;
-                color: #f0f6fc;
+                letter-spacing: -0.5px;
             }
 
             .meta {
                 font-size: 0.85rem;
-                color: var(--text-muted);
+                color: var(--meta-dim);
             }
 
             h2 {
-                font-size: 1.5rem;
-                margin-top: 2rem;
+                font-size: var(--font-h2);
+                margin-top: 2.5rem;
                 margin-bottom: 1rem;
-                color: #f0f6fc;
-                border-bottom: 1px solid var(--border-color);
+                color: var(--text-primary);
+                border-bottom: 1px solid var(--border-solid);
                 padding-bottom: 0.3rem;
             }
 
             h3 {
                 font-size: 1.2rem;
-                margin-top: 1.5rem;
+                margin-top: 2rem;
                 margin-bottom: 0.5rem;
-                color: #f0f6fc;
+                color: var(--text-primary);
             }
 
             p {
                 margin-top: 0;
-                margin-bottom: 1.2rem;
+                margin-bottom: 1.5rem;
             }
 
             blockquote {
-                margin: 1.5rem 0;
-                padding: 0 1rem;
-                color: var(--text-muted);
-                border-left: 0.25rem solid var(--quote-border);
+                margin: 2rem 0;
+                padding: 0.5rem 1.25rem;
+                color: var(--text-primary);
+                background-color: var(--surface);
+                border-left: 4px solid var(--accent-solid);
+                border-radius: 0 4px 4px 0;
                 font-style: italic;
             }
 
+            pre,
             code {
                 font-family:
-                    ui-monospace,
-                    SFMono-Regular,
-                    SF Mono,
-                    Menlo,
-                    Consolas,
-                    Liberation Mono,
-                    monospace;
-                background-color: var(--code-bg);
-                padding: 0.2rem 0.4rem;
-                border-radius: 6px;
-                font-size: 85%;
+                    "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+                background-color: #0a0d14;
+                border: 1px solid var(--border-solid);
+            }
+
+            code {
+                padding: 0.15rem 0.4rem;
+                font-size: 0.95em;
+                color: #fca5a5;
+                border-radius: 3px;
             }
 
             pre {
-                background-color: var(--code-bg);
-                padding: 1rem;
-                border-radius: 6px;
+                padding: 1.25rem;
                 overflow-x: auto;
-                border: 1px solid var(--border-color);
-                margin-bottom: 1.5rem;
+                margin: 1.5rem 0;
+                border-radius: 6px;
             }
 
             pre code {
                 padding: 0;
-                background-color: transparent;
-                font-size: 90%;
+                border: none;
+                background: transparent;
+                color: var(--text-secondary);
             }
 
             table {
                 width: 100%;
                 border-collapse: collapse;
-                margin-bottom: 1.5rem;
+                margin: 2rem 0;
             }
 
             th,
             td {
-                padding: 0.5rem 0.75rem;
-                border: 1px solid var(--border-color);
+                padding: 0.75rem 1rem;
+                border: 1px solid var(--border-solid);
                 text-align: left;
             }
 
             th {
-                background-color: var(--card-bg);
-                color: #f0f6fc;
+                background-color: var(--surface);
+                color: var(--text-primary);
             }
 
             ul {
                 margin-top: 0;
-                margin-bottom: 1.2rem;
+                margin-bottom: 1.5rem;
                 padding-left: 2rem;
             }
 
             li {
-                margin-bottom: 0.4rem;
+                margin-bottom: 0.5rem;
             }
 
             footer {
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid var(--border-color);
-                text-align: center;
-                font-size: 0.85rem;
-                color: var(--text-muted);
+                margin-top: 6rem;
+                border-top: 1px solid var(--border-solid);
+                padding-top: 2rem;
+                font-family: "SFMono-Regular", Consolas, Monaco, monospace;
+                font-size: 0.8rem;
+                color: var(--meta-dim);
+                text-align: left;
             }
         </style>
     </head>
     <body>
-        <div class="container">
-            <header>
-                <div class="site-title">Security Research Blog</div>
+        <header>
+            <a href="index.html" class="logo">birdbrain<span>.</span>dev</a>
+            <nav>
+                <a href="index.html">/blog</a>
+                <a href="#">/projects</a>
+                <a href="htb.html">/htb</a>
+                <a href="thm.html">/thm</a>
+                <a href="about.html">/about</a>
+            </nav>
+        </header>
+
+        <div class="writeup-container">
+            <header class="writeup-header">
+                <div class="site-title">Cloud Security / Web API</div>
                 <h1>
                     Finding Bugs in Fusion Drinks: How a Promotional QR Code
                     Exposed Production PII
@@ -324,16 +388,29 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Metric</th>
-                            <th>Value</th>
+                            <th style="border-color: var(--border-solid)">
+                                Metric
+                            </th>
+                            <th style="border-color: var(--border-solid)">
+                                Value
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Severity Assessment</strong></td>
-                            <td>
-                                <span style="color: #ff6b6b; font-weight: bold"
-                                    >Critical</span
+                            <td style="border-color: var(--border-solid)">
+                                <strong>Severity Assessment</strong>
+                            </td>
+                            <td style="border-color: var(--border-solid)">
+                                <span
+                                    style="
+                                        color: #fca5a5;
+                                        font-weight: bold;
+                                        font-family:
+                                            &quot;SFMono-Regular&quot;,
+                                            monospace;
+                                    "
+                                    >CRITICAL</span
                                 >
                             </td>
                         </tr>
@@ -400,9 +477,7 @@
                 </p>
             </main>
 
-            <footer>
-                &copy; 2026 Security Research Lab. All rights reserved.
-            </footer>
+            <footer>&copy; 2026 birdbrain.dev // Volatile logs.</footer>
         </div>
     </body>
 </html>
